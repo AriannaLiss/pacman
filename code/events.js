@@ -11,3 +11,7 @@ export const resetColor = (e) => {
         document.querySelector('.container').style.backgroundColor = DEF_BG;
     }
 }
+
+export const changePacmanSize = () => {
+    document.querySelector('.pacman').classList.toggle('huge-pacman');
+}

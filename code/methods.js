@@ -1,4 +1,4 @@
-import { resetColor, switchTheme } from "./events.js";
+import { changePacmanSize, resetColor, switchTheme } from "./events.js";
 
 const fieldSize = 1;
 const unit = 'rem';
@@ -7,9 +7,11 @@ export const createRadioTheme = () => {
     const form = document.createElement('form');
     form.insertAdjacentHTML('beforeend','<p>Please select your favorite color:</p>');
     form.appendChild(createOption('red','theme_color'));
-    form.appendChild(createOption('magenta','theme_color',true));
+    form.appendChild(createOption('magenta','theme_color'));
+    form.appendChild(createOption('black','theme_color'));
     form.appendChild(createOption('defaultColor','theme_color',true, resetColor));
     document.querySelector('body').appendChild(form);
+    makePacmanBigBtn();
 }
 
 const createOption = (id, radioGroup, checked = false,event = switchTheme) => {
@@ -34,6 +36,25 @@ const createOption = (id, radioGroup, checked = false,event = switchTheme) => {
     div.appendChild(label);
 
     return div;
+}
+
+function createPacman(){
+    const pacmanPlace = document.querySelector('.pacman-place');
+    pacmanPlace.innerHTML='';
+    pacmanPlace.insertAdjacentHTML('beforeend',`
+    <div class="pacman">
+<div class="pacman-top"></div>
+<div class="pacman-bottom"></div></div>
+`
+    )
+}
+
+function makePacmanBigBtn(){
+    const btn = document.createElement('input');
+    btn.type = 'button';
+    btn.value = 'Make huge pacman';
+    btn.addEventListener('click', changePacmanSize);
+    document.querySelector('form').appendChild(btn);
 }
 
 export function createPlayground(){
@@ -69,6 +90,7 @@ export function createPlayground(){
         }));
 
         document.querySelector('body').appendChild(container);
+        createPacman();
     });
 }
 

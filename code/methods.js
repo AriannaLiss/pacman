@@ -1,4 +1,5 @@
-import { changePacmanSize, resetColor, switchTheme } from "./events.js";
+import { changePacmanSize, checkKey, resetColor, switchTheme } from "./events.js";
+import { field, pacman } from "./index.js";
 
 const fieldSize = 1;
 const unit = 'rem';
@@ -38,17 +39,6 @@ const createOption = (id, radioGroup, checked = false,event = switchTheme) => {
     return div;
 }
 
-function createPacman(){
-    const pacmanPlace = document.querySelector('.pacman-place');
-    pacmanPlace.innerHTML='';
-    pacmanPlace.insertAdjacentHTML('beforeend',`
-    <div class="pacman">
-<div class="pacman-top"></div>
-<div class="pacman-bottom"></div></div>
-`
-    )
-}
-
 function makePacmanBigBtn(){
     const btn = document.createElement('input');
     btn.type = 'button';
@@ -70,27 +60,36 @@ export function createPlayground(){
         '-3':'door',
         '-4':'monster-place'
     }
-    const pg = [];
+     const pg = [];
     getText('./code/playground.txt')
     .then(text => {
         text.split('\n').forEach((str,i) => pg[i]=str.split('\t'));
-        console.dir(pg);
-        
-        const container = document.createElement('div');
-        container.classList.add('container');
-        container.style.width = fieldSize * pg[0].length + unit;
-        pg.forEach((row) =>
-            row.forEach((f) => {
-            const span = document.createElement('span');
+        let container = document.querySelector('.container');
+        if (container) {
+            container.innerHTML = '';
+        } else {
+            container = document.createElement('div');
+            container.classList.add('container');
+            container.style.width = fieldSize * pg[0].length + unit;
+        }
+        pg.forEach((row,y) =>
+            row.forEach((f,x) => {
+            const span = document.createElement('div');
             span.classList.add('field');
             span.classList.add(FIELDS[f]);
+            span.dataset.x = x;
+            span.dataset.y = y;
             span.style.width = fieldSize + unit;
             span.style.height = fieldSize + unit;
             container.appendChild(span);
         }));
 
+        field.init(pg);
+
+        document.addEventListener('keydown', checkKey);
+
         document.querySelector('body').appendChild(container);
-        createPacman();
+        pacman.createPacman(document.querySelector('.pacman-place'));
     });
 }
 

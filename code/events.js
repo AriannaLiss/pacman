@@ -1,3 +1,5 @@
+import { pacman } from "./index.js";
+
 const DEF_BG = 'rgba(239, 141, 227, 0.935)';
 
 export const switchTheme = (e) => {
@@ -14,4 +16,12 @@ export const resetColor = (e) => {
 
 export const changePacmanSize = () => {
     document.querySelector('.pacman').classList.toggle('huge-pacman');
+}
+
+export function checkKey(e) {
+    e = e || window.event;
+    if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+        pacman.move(e.code.substr(5).toLowerCase());
+        e.preventDefault();
+    }
 }

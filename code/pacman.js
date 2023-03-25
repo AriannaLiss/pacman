@@ -18,6 +18,10 @@ export class Pacman{
         this.#position = new Point(tag.dataset.x, tag.dataset.y);
     }
 
+    isBoy(){
+        return this.#boy;
+    }
+
     switchGender(){
         this.#boy ? this.#boy = false: this.#boy = true;
     }

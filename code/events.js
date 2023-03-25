@@ -15,7 +15,15 @@ export const resetColor = (e) => {
 }
 
 export const changePacmanSize = () => {
-    document.querySelector('.pacman').classList.toggle('huge-pacman');
+    const pacTag = document.querySelector('.pacman');
+    pacTag.classList.toggle('huge-pacman');
+    if(pacTag.classList.contains('huge-pacman')) {
+        document.querySelector('.pacman-bow').style.top = '-15%'
+        document.querySelectorAll('.pacman-bow>span').forEach((span)=>{span.style.transform = 'scale(20)'});
+    } else {
+        document.querySelector('.pacman-bow').style.top = '-40%'
+        document.querySelectorAll('.pacman-bow>span').forEach((span)=>{span.style.transform = 'scale(1)'});
+    }
 }
 
 export function checkKey(e) {
@@ -29,4 +37,5 @@ export function checkKey(e) {
 export const girlBoySwitch = () => {
     document.querySelector('.pacman-bow').classList.toggle('hide');
     pacman.switchGender();
+    document.querySelector('#genderSwitcherText').innerText = pacman.isBoy() ? 'BOY' : 'GIRL'
 }

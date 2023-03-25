@@ -6,7 +6,7 @@ const unit = 'rem';
 
 export const createRadioTheme = () => {
     const form = document.createElement('form');
-    form.insertAdjacentHTML('beforeend','<p>You can ajast your game</p>');
+    form.insertAdjacentHTML('beforeend','<p>You can adjust your game</p>');
     const flexCont = document.createElement('div');
     flexCont.classList.add('flex-container');
     const colorDiv = document.createElement('div');
@@ -30,17 +30,26 @@ const createSwithcer = () => {
 //   <input type="checkbox">
 //   <span class="slider round"></span>
 // </label>
+    const switcher = document.createElement('div');
     const label = document.createElement('label');
     label.classList.add('switch');
     const input = document.createElement('input');
     input.type = 'checkbox';
+    input.id = 'genderSwitcher';
     const span = document.createElement('span');
     span.classList.add('slider');
     span.classList.add('round');
+    const labelText = document.createElement('label');
     input.addEventListener('click', girlBoySwitch);
     label.appendChild(input);
     label.appendChild(span);
-    return label
+    switcher.appendChild(label);
+
+    labelText.innerText='BOY';
+    labelText.id ="genderSwitcherText";
+    labelText.htmlFor='genderSwitcher';
+    switcher.appendChild(labelText);
+    return switcher;
 }
 
 const createOption = (id, radioGroup, checked = false,event = switchTheme) => {
@@ -71,7 +80,7 @@ function makePacmanBigBtn(){
     const btn = document.createElement('input');
     btn.type = 'button';
     btn.id = 'makeHuge';
-    btn.value = 'Make huge pacman';
+    btn.value = 'HUGE';
     btn.addEventListener('click', changePacmanSize);
     return btn
 }

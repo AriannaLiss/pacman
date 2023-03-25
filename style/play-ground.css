@@ -1,0 +1,41 @@
+.field{
+    display: inline-block;
+}
+
+/* 
+0:'empty',
+1:'dot',
+2:'great-dot',
+3:'fruit',
+4:'pacman-place',
+5:'portal',
+'-1':'border',
+'-2':'double-border',
+'-3':'door',
+'-4':'monster-place' */
+
+.double-border{
+    background-color: blue;
+}
+
+.border{
+    background-color:rgb(0, 162, 255);
+}
+
+.door{
+    background-color:pink;
+}
+
+.dot{
+    background-image: url('../img/dot.svg');
+    background-repeat: no-repeat;
+    background-size: 30% 30%;
+    background-position: center;
+}
+
+.great-dot{
+    background-image: url('../img/dot.svg');
+    background-repeat: no-repeat;
+    background-size: 70% 70%;
+    background-position: center;
+}

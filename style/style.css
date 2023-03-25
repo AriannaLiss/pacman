@@ -1,0 +1,26 @@
+body{
+    font-size: 24px;
+}
+
+.container{
+    background-color: rgba(239, 141, 227, 0.935);
+    margin:3rem auto;
+    padding:3rem 5rem; 
+    line-height: 0rem;
+}
+
+.red{
+    color:red;
+}
+
+.pink{
+    color:pink;
+}
+
+.defaultColor{
+    color: rgba(239, 141, 227, 0.935);
+}
+
+.magenta{
+    color:magenta;
+}

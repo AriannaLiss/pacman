@@ -21,6 +21,44 @@ body{
     line-height: 2rem;
 }
 
+.pacman-bow{
+  width: 70%;
+  height: 50%;
+  position: absolute;
+  left: 15%;
+  top: -40%;
+  /* background-image:url(../img/bow.svg);
+  background-repeat: no-repeat;
+  background-size: 100px 200px; */
+  text-align: center;
+}
+
+.pacman-bow svg{
+  width:100%;
+  height:100%;
+}
+
+.pacman-bow>span{
+  width: 0;
+  height: 0;
+  border-style: solid;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+
+.pacman-bow>span:first-of-type{
+  left: 1px;
+  border-width: 3px 0 3px 5px;
+  border-color: transparent transparent transparent #ff0000;
+}
+
+.pacman-bow>span:last-of-type{
+  right:1px;
+  border-width: 3px 5px 3px 0;
+  border-color: transparent #ff0000 transparent transparent;
+}
+
 .huge-pacman{
     width:200px!important;
     height:200px!important;

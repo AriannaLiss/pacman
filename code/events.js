@@ -25,3 +25,8 @@ export function checkKey(e) {
         e.preventDefault();
     }
 }
+
+export const girlBoySwitch = () => {
+    document.querySelector('.pacman-bow').classList.toggle('hide');
+    pacman.switchGender();
+}

@@ -2,11 +2,28 @@ body{
     font-size: 24px;
 }
 
+.flex-container{
+    display: flex;
+    justify-content: space-around;
+}
+
+#makeHuge{    
+    display: block;
+    background-color: red;
+    margin: 1rem;
+    height: 5rem;
+    border-radius: 3rem;
+}
+
 .container{
     background-color: rgba(239, 141, 227, 0.935);
     margin:3rem auto;
     padding:3rem 5rem; 
     line-height: 0rem;
+}
+
+.hide{
+    display: none;
 }
 
 label{

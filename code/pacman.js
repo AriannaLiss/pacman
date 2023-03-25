@@ -4,13 +4,22 @@ import { Point } from "./point.js";
 
 export class Pacman{
     #position; 
-    #pacmanHtml = `<div class="pacman">
-                <div class="pacman-top"></div>
+    #boy = true;
+    #pacmanHtml = () => {
+        return `<div class="pacman">
+                <div class="pacman-top">
+                <div class="pacman-bow ${this.#boy ? 'hide' : ''}"><span></span><span></span>
+                </div></div>
                 <div class="pacman-bottom"></div></div>`
+    }
 
     createPacman(tag){
-        tag.innerHTML = this.#pacmanHtml;
+        tag.innerHTML = this.#pacmanHtml();
         this.#position = new Point(tag.dataset.x, tag.dataset.y);
+    }
+
+    switchGender(){
+        this.#boy ? this.#boy = false: this.#boy = true;
     }
 
     getCurrentTagField(){
@@ -33,13 +42,24 @@ export class Pacman{
         
         this.#position.move(potentialPosition);
         const newPosition = this.getCurrentTagField();//document.querySelector(`[data-x='${this.#x}'][data-y='${this.#y}']`)
-        newPosition.innerHTML = this.#pacmanHtml;
+        newPosition.innerHTML = this.#pacmanHtml();
+        this.#rotateHead(direction);
 
         if (field.isFinish()){
             setTimeout(()=>{
                 alert('Congratulates!!!!');
                 createPlayground();
             },100);
+        }
+    }
+
+    #rotateHead(direction){
+        if(direction == 'left'){
+            document.querySelector('.pacman').style.transform = 'scaleX(-1)';
+        } else if(direction == 'up'){
+            document.querySelector('.pacman').style.transform = 'rotate(270deg)';
+        } else if(direction == 'down'){
+            document.querySelector('.pacman').style.transform = 'rotate(90deg)';
         }
     }
 

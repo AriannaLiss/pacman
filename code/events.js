@@ -29,7 +29,7 @@ export const changePacmanSize = () => {
 export function checkKey(e) {
     e = e || window.event;
     if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
-        pacman.move(e.code.substr(5).toLowerCase());
+        pacman.startMove(e.code.substr(5).toLowerCase());
         e.preventDefault();
     }
 }
@@ -38,4 +38,9 @@ export const girlBoySwitch = () => {
     document.querySelector('.pacman-bow').classList.toggle('hide');
     pacman.switchGender();
     document.querySelector('#genderSwitcherText').innerText = pacman.isBoy() ? 'BOY' : 'GIRL'
+}
+
+export const speedSwitch = () => {
+    pacman.switchFlow();
+    document.querySelector('#speedSwitcherText').innerText = pacman.isFlow() ? 'flow' : 'push'
 }

@@ -5,6 +5,9 @@ import { Point } from "./point.js";
 export class Pacman{
     #position; 
     #boy = true;
+    #flow = false;
+    #futureDirection = '';
+    #moving = false;
     #pacmanHtml = () => {
         return `<div class="pacman">
                 <div class="pacman-top">
@@ -16,6 +19,14 @@ export class Pacman{
     createPacman(tag){
         tag.innerHTML = this.#pacmanHtml();
         this.#position = new Point(tag.dataset.x, tag.dataset.y);
+    }
+
+    isFlow(){
+        return this.#flow;
+    }
+
+    switchFlow(){
+        this.#flow ? this.#flow = false: this.#flow = true;
     }
 
     isBoy(){
@@ -34,18 +45,40 @@ export class Pacman{
         return field.getField(this.#position);
     }
 
-    move(direction){
-        const potentialPosition = this.#getNewPostion(direction);
+    startMove(direction){
+        if (this.#futureDirection === direction) return;
+        this.#moving ?
+        this.#futureDirection = direction :
+        this.#move(direction);
+    }
+
+    #stop(){
+        this.#futureDirection = '';
+        this.#moving = false;
+    }
+
+    #move(direction){
+        this.#moving = true;
+        if (this.#futureDirection &&
+            this.#futureDirection!=direction && 
+            field.getField(this.getNewPostion(this.#futureDirection))>=0){
+            if (this.#flow) setTimeout( () => this.#move(this.#futureDirection), 150);
+            return;
+        }
+        const potentialPosition = this.getNewPostion(direction);
         const nextField = field.getField(potentialPosition);
-        if (nextField<0) return;
+        if (nextField<0) {
+            this.#stop();
+            return;
+        }
         if (nextField == 1 || nextField == 2){
             field.eatDot(potentialPosition);
         }
-        const oldPosition = this.getCurrentTagField(); //document.querySelector(`[data-x='${this.#x}'][data-y='${this.#y}']`)
+        const oldPosition = this.getCurrentTagField();
         oldPosition.innerHTML ='';
         
         this.#position.move(potentialPosition);
-        const newPosition = this.getCurrentTagField();//document.querySelector(`[data-x='${this.#x}'][data-y='${this.#y}']`)
+        const newPosition = this.getCurrentTagField();
         newPosition.innerHTML = this.#pacmanHtml();
         this.#rotateHead(direction);
 
@@ -55,6 +88,7 @@ export class Pacman{
                 createPlayground();
             },100);
         }
+        this.#flow ? setTimeout( () => this.#move(direction), 150) : this.#stop();
     }
 
     #rotateHead(direction){
@@ -67,7 +101,7 @@ export class Pacman{
         }
     }
 
-    #getNewPostion(direction){
+    getNewPostion(direction){
         const position = new Point(this.#position.getX(), this.#position.getY())
         if (this.getCurrentField() == 5 && ((this.#position.getX() == 0 && direction == 'left')||(this.#position.getX() > 0 && direction == 'right'))) {
                 position.move(field.teleport(position))

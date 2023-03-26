@@ -1,10 +1,15 @@
 body{
     font-size: 24px;
+    color:white;
 }
 
 .flex-container{
     display: flex;
     justify-content: space-around;
+}
+
+.switch-container{
+    margin: 1rem;
 }
 
 #makeHuge{    
@@ -19,7 +24,6 @@ body{
 }
 
 #genderSwitcherText{
-    color:white;
     display: inline-block;
 }
 

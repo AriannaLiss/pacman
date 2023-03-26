@@ -1,4 +1,4 @@
-import { changePacmanSize, checkKey, girlBoySwitch, resetColor, switchTheme } from "./events.js";
+import { changePacmanSize, checkKey, girlBoySwitch, resetColor, speedSwitch, switchTheme } from "./events.js";
 import { field, pacman } from "./index.js";
 
 const fieldSize = 1;
@@ -16,7 +16,8 @@ export const createRadioTheme = () => {
     colorDiv.appendChild(createOption('defaultColor','theme_color',true, resetColor));
     
     const secondDiv = document.createElement('div');
-    secondDiv.appendChild(createSwithcer());
+    secondDiv.appendChild(createSwithcer("genderSwitcher","genderSwitcherText",'BOY', girlBoySwitch));
+    secondDiv.appendChild(createSwithcer("speedSwitcher","speedSwitcherText",'push', speedSwitch));
     secondDiv.appendChild(makePacmanBigBtn());
 
     flexCont.appendChild(colorDiv);
@@ -25,29 +26,30 @@ export const createRadioTheme = () => {
     document.querySelector('body').appendChild(form);
 }
 
-const createSwithcer = () => {
+const createSwithcer = (inputId, labelId, text, switchHandler) => {
 //     <label class="switch">
 //   <input type="checkbox">
 //   <span class="slider round"></span>
 // </label>
     const switcher = document.createElement('div');
+    switcher.classList.add('switch-container');
     const label = document.createElement('label');
     label.classList.add('switch');
     const input = document.createElement('input');
     input.type = 'checkbox';
-    input.id = 'genderSwitcher';
+    input.id = inputId;
     const span = document.createElement('span');
     span.classList.add('slider');
     span.classList.add('round');
     const labelText = document.createElement('label');
-    input.addEventListener('click', girlBoySwitch);
+    input.addEventListener('click', switchHandler);
     label.appendChild(input);
     label.appendChild(span);
     switcher.appendChild(label);
 
-    labelText.innerText='BOY';
-    labelText.id ="genderSwitcherText";
-    labelText.htmlFor='genderSwitcher';
+    labelText.innerText=text;
+    labelText.id = labelId;
+    labelText.htmlFor= inputId;
     switcher.appendChild(labelText);
     return switcher;
 }

@@ -1,8 +1,25 @@
 import { changePacmanSize, checkKey, girlBoySwitch, resetColor, speedSwitch, switchTheme } from "./events.js";
-import { field, pacman } from "./index.js";
+import { field, ghosts, pacman } from "./index.js";
 
 const fieldSize = 1;
 const unit = 'rem';
+
+
+export const win = () => {
+    newGame('Congratulates!!!!');
+}
+
+export const loose = () => {
+    newGame('You lose :(');
+}
+
+export const newGame = (msg) => {
+    ghosts.forEach((ghost) => ghost = ghost.freeze());
+    setTimeout(()=>{
+        alert(msg);
+        createPlayground();
+    },100);
+}
 
 export const createRadioTheme = () => {
     const form = document.createElement('form');
@@ -98,7 +115,7 @@ export function createPlayground(){
         '-1':'border',
         '-2':'double-border',
         '-3':'door',
-        '-4':'monster-place'
+        '-4':'ghost-place'
     }
      const pg = [];
     getText('./code/playground.txt')
@@ -129,8 +146,23 @@ export function createPlayground(){
         document.addEventListener('keydown', checkKey);
 
         document.querySelector('body').appendChild(container);
-        pacman.createPacman(document.querySelector('.pacman-place'));
+
+        createPacman();
+        createGhosts();
     });
+}
+
+const createPacman = () =>{
+    pacman.createPacman(document.querySelector('.pacman-place'));
+}
+
+const createGhosts = () =>{
+    const [...ghostPlaces] = document.querySelectorAll('.ghost-place')
+    ghosts.forEach((ghost,i) => {
+        const place = ghostPlaces.length%(i+1);
+       ghost.create(ghostPlaces[place])
+    }
+    )
 }
 
 async function getText(file) {

@@ -5,17 +5,20 @@ export class Field{
     #dots;
     #portals = [];
     
+    get bottom(){
+        return this.#pg.length - 1;
+    } 
+
     teleport(position){
-        debugger
-        return this.#portals.find((point) => point.getX()!=position.getX());
+        return this.#portals.find((point) => point.x!=position.x);
     }
 
     getTagField(position){
-        return document.querySelector(`[data-x='${position.getX()}'][data-y='${position.getY()}']`);
+        return document.querySelector(`[data-x='${position.x}'][data-y='${position.y}']`);
     }
     
     getField(position){
-        return this.#pg[position.getY()][position.getX()];
+        return this.#pg[position.y][position.x];
     }
 
     init(pg){
@@ -30,11 +33,11 @@ export class Field{
     }
 
     eatDot(position){
-        if ((this.#pg[position.getY()][position.getX()] == 1)||this.#pg[position.getY()][position.getX()]==2){
+        if ((this.#pg[position.y][position.x] == 1)||this.#pg[position.y][position.x]==2){
             const eatenDot = this.getTagField(position);
             eatenDot.classList.remove('dot');
             eatenDot.classList.remove('great-dot');
-            this.#pg[position.getY()][position.getX()] = 0;
+            this.#pg[position.y][position.x] = 0;
             this.#dots--;
         }
     }

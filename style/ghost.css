@@ -1,0 +1,91 @@
+body{ background: #000; }
+
+.blinky{ background-color: red;}
+.clyde{ background-color: orange;}
+.inky{ background-color: cyan;}
+.pinky{ background-color: pink;}
+
+.kind-ghost{
+  background-color: blue;
+}
+
+.kind-ghost .ghostTail{
+  background:
+    linear-gradient(-45deg, transparent 75%, blue 75%) 0 50%,
+    linear-gradient( 45deg, transparent 75%, blue 75%) 0 50%!important;
+}
+
+.ghost{
+  border-radius: 100% 100% 0 0;
+  display: inline-block;
+  height:100%;
+  width:100%;
+  position: relative;
+}
+
+.eyes{
+  height: 6px;
+  left: 50%;
+  margin-left: -4.5px;
+  position: absolute;
+  width: 9px;
+  top: 5px;
+}
+
+.eye{
+  background: #fff;
+  border-radius: 100%;
+  height: 6px;
+  width: 3px;
+}
+
+.iris{
+  background: blue;
+  border-radius: 100%;
+  height: 4px;
+  position: absolute;
+  width: 2px;
+  top: 1px;
+}
+
+.leftEye{ float: left; }
+.leftEye .iris{ left: .5px; }
+
+.rightEye{float: right; }
+.rightEye .iris{ right: .5px; }
+
+.ghostTail{
+  background-repeat: repeat-x;
+  bottom: -5px;
+  height: 5px;
+  position: absolute;
+  width: 100%;
+}
+
+.blinky .ghostTail{
+  background:
+    linear-gradient(-45deg, transparent 75%, red 75%) 0 50%,
+    linear-gradient( 45deg, transparent 75%, red 75%) 0 50%;
+  background-size:7px 7px, 7px 7px;;
+}
+
+.clyde .ghostTail{
+  background:
+    linear-gradient(-45deg, transparent 75%, orange 75%) 0 50%,
+    linear-gradient( 45deg, transparent 75%, orange 75%) 0 50%;
+  background-size:7px 7px, 7px 7px;;
+}
+
+.inky .ghostTail{
+  background:
+    linear-gradient(-45deg, transparent 75%, cyan 75%) 0 50%,
+    linear-gradient( 45deg, transparent 75%, cyan 75%) 0 50%;
+  background-size:7px 7px, 7px 7px;;
+}
+
+.pinky .ghostTail{
+  background:
+    linear-gradient(-45deg, transparent 75%, pink 75%) 0 50%,
+    linear-gradient( 45deg, transparent 75%, pink 75%) 0 50%;
+  background-size:7px 7px, 7px 7px;;
+}

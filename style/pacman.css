@@ -21,6 +21,24 @@ body{
     line-height: 2rem;
 }
 
+.huge-pacman{
+  width:200px!important;
+  height:200px!important;
+  position: absolute;
+  left: 40%;
+  top: 23%;
+}
+
+.pacman{
+z-index:10;
+position: absolute;
+top:4rem;
+left:6rem;
+height:1rem;
+width:1rem;
+transition: top 150ms, left 150ms;
+}
+
 .pacman-bow{
   width: 70%;
   height: 50%;
@@ -54,20 +72,6 @@ body{
   right:15%;
   border-width: 3px 5px 3px 0;
   border-color: transparent #ff0000 transparent transparent;
-}
-
-.huge-pacman{
-    width:200px!important;
-    height:200px!important;
-    position: absolute;
-    left: 40%;
-    top: 23%;
-}
-
-.pacman{
-  z-index:10;
-  width:100%;
-  height:100%;
 }
 
 .pacman-top{

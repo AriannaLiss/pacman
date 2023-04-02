@@ -1,5 +1,8 @@
 import { Point } from "./point.js";
 
+export const fieldSize = 1;
+export const unit = 'rem';
+
 export class Field{
     #pg = [];
     #dots;

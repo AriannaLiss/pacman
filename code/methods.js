@@ -1,9 +1,6 @@
 import { changePacmanSize, checkKey, girlBoySwitch, resetColor, speedSwitch, switchTheme } from "./events.js";
+import { fieldSize, unit } from "./field.js";
 import { field, ghosts, pacman } from "./index.js";
-
-const fieldSize = 1;
-const unit = 'rem';
-
 
 export const win = () => {
     newGame('Congratulates!!!!');

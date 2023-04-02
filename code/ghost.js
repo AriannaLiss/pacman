@@ -33,33 +33,34 @@ export class Ghost{
         this.#speed *= .95;
         this.#sameDirection = 0;
         this.#stop = false;
-        if (this.#blinkIntervalID) clearInterval(this.#blinkIntervalID);
-        if (this.#blinkTimeoutID) clearTimeout(this.#blinkTimeoutID);
-        if (this.#kindTimeoutID) clearTimeout(this.#kindTimeoutID);
+        this.#cleanIntervals();
     }
 
     freeze(){
-        this.#erise();
         this.#stop = true;
         this.#angry = true;
     }
 
     beKind(){
-        if (this.#blinkIntervalID) clearInterval(this.#blinkIntervalID);
+        this.#cleanIntervals();
         this.#angry = false;
-        this.#kindTimeoutID = setTimeout(() => {
-            this.#blinkIntervalID = this.#blink();
-            this.#blinkTimeoutID = setTimeout(()=> {
-                clearInterval(this.#blinkIntervalID);
-                this.#angry = true;
-            }, this.#kindnessTime/4)
-        }, this.#kindnessTime);
+        this.#kindTimeoutID = setTimeout(() => this.blink(), this.#kindnessTime);
     }
 
-    #blink(){
-        return setInterval(() => {
+    #cleanIntervals(){
+        if (this.#blinkIntervalID) clearInterval(this.#blinkIntervalID);
+        if (this.#blinkTimeoutID) clearTimeout(this.#blinkTimeoutID);
+        if (this.#kindTimeoutID) clearTimeout(this.#kindTimeoutID);
+    }
+
+    blink(){
+        this.#blinkIntervalID = setInterval(() => {
             document.getElementsByClassName(this.#color)[0]?.classList.toggle('kind-ghost');
         }, this.#kindnessTime/40);
+        this.#blinkTimeoutID = setTimeout(()=> {
+            clearInterval(this.#blinkIntervalID);
+            this.#angry = true;
+        }, this.#kindnessTime/4);
     }
 
     get angry(){
@@ -133,7 +134,7 @@ export class Ghost{
 
     backHome(){
         console.log(this.#color + ' is come back to ' + this.#startPos.x);
-        this.#erise();
+        this.erise();
         this.freeze();
         this.#position.move(this.#startPos);
         setTimeout(() => {
@@ -196,7 +197,7 @@ export class Ghost{
         return false;
     }
 
-    #erise(){
+    erise(){
         const ghost = document.querySelector('.'+this.#color);
         if(ghost?.parentNode){
             ghost.parentNode.removeChild( ghost );
@@ -204,7 +205,7 @@ export class Ghost{
     }
 
     #repaint(position){
-        this.#erise();
+        this.erise();
         this.#position.move(position);
         const newPosition = this.getCurrentTagField();
         newPosition.innerHTML = this.#ghostHtml();

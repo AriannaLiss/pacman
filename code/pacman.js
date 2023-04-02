@@ -95,7 +95,15 @@ export class Pacman{
         this.#move(direction);
     }
 
-    #stop(){
+    rotate(){
+        let i=1;
+        const rotationIntervalID = setInterval(()=>{
+            this.#pacman.style.transform=`rotate(${0.25*i++}turn)`;
+            if(i==12) clearInterval(rotationIntervalID);
+        },100)
+    }
+
+    stop(){
         this.#futureDirection = '';
         this.#moving = false;
     }
@@ -111,7 +119,7 @@ export class Pacman{
         const potentialPosition = this.getNewPostion(direction);
         const nextField = field.getField(potentialPosition);
         if (nextField<0) {
-            this.#stop();
+            this.stop();
             return;
         }
         if (nextField == 1 || nextField == 2){
@@ -126,7 +134,7 @@ export class Pacman{
         if (this.#looseWinTest()) { 
             return;
         }
-        this.#flow ? setTimeout( () => this.#move(direction), this.#speed) : this.#stop();
+        this.#flow ? setTimeout( () => this.#move(direction), this.#speed) : this.stop();
     }
 
     #repaint(position){

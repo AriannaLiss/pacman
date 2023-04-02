@@ -3,19 +3,30 @@ import { fieldSize, unit } from "./field.js";
 import { field, ghosts, pacman } from "./index.js";
 
 export const win = () => {
+    stopCreatures();
+    ghosts.forEach((ghost) => {
+        ghost.blink();
+    })
+    setTimeout(()=>ghosts.forEach((ghost) => ghost.erise()),500);
     newGame('Congratulates!!!!');
 }
 
 export const loose = () => {
+    stopCreatures();
+    pacman.rotate();
     newGame('You lose :(');
 }
 
-export const newGame = (msg) => {
+const stopCreatures = () => {
+    pacman.stop();
     ghosts.forEach((ghost) => ghost = ghost.freeze());
+}
+
+export const newGame = (msg) => {
     setTimeout(()=>{
         alert(msg);
         createPlayground();
-    },100);
+    },1500);
 }
 
 export const createRadioTheme = () => {

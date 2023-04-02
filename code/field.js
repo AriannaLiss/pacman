@@ -1,3 +1,4 @@
+import { field } from "./index.js";
 import { Point } from "./point.js";
 
 export const fieldSize = 1;
@@ -7,6 +8,11 @@ export class Field{
     #pg = [];
     #dots;
     #portals = [];
+    #intervals = [];
+
+    get intervals(){
+        return this.#intervals;
+    }
     
     get bottom(){
         return this.#pg.length - 1;
@@ -35,10 +41,29 @@ export class Field{
         }));
     }
 
+    clearIntervals(){
+        let interval = this.#intervals.pop();
+        while (interval){
+            clearInterval(interval);
+            interval = this.#intervals.pop();
+        }
+    }
+
     eatDot(position){
-        if ((this.#pg[position.y][position.x] == 1)||this.#pg[position.y][position.x]==2){
+        if (this.#pg[position.y][position.x] == 1){
             const eatenDot = this.getTagField(position);
             eatenDot.classList.remove('dot');
+            this.#pg[position.y][position.x] = 0;
+            this.#dots--;
+        }
+    }
+
+    eatGreatDot(position){
+        if (this.#pg[position.y][position.x]==2){
+            const eatenDot = this.getTagField(position);
+            eatenDot.classList.remove('dot');
+            clearInterval(eatenDot.dataset.interval);
+            eatenDot.dataset.interval = '';
             eatenDot.classList.remove('great-dot');
             this.#pg[position.y][position.x] = 0;
             this.#dots--;

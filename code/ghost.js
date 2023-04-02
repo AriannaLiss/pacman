@@ -2,7 +2,7 @@ import { field, pacman } from "./index.js";
 import { loose } from "./methods.js";
 import { Point } from "./point.js";
 
-const colorList=['blinky', 'clyde', 'inky', 'pinky'];
+const colorList=['clyde', 'inky', 'pinky', 'blinky'];
 
 export class Ghost{
     #position; 
@@ -30,7 +30,6 @@ export class Ghost{
         this.#inCage = true;
         this.#angry = true;
         this.#futureDirection = 'up';
-        this.#speed *= .95;
         this.#sameDirection = 0;
         this.#stop = false;
         this.#cleanIntervals();
@@ -133,14 +132,15 @@ export class Ghost{
     }
 
     backHome(){
-        console.log(this.#color + ' is come back to ' + this.#startPos.x);
-        this.erise();
         this.freeze();
-        this.#position.move(this.#startPos);
-        setTimeout(() => {
-            this.init();
-            this.startMove()
-        }, this.#kindnessTime);
+        setTimeout(()=>{
+            this.erise();
+            this.#position.move(this.#startPos);
+            setTimeout(() => {
+                this.init();
+                this.startMove()
+            }, this.#kindnessTime);  
+        }, 100)
     }
 
     #move(direction){
@@ -165,6 +165,7 @@ export class Ghost{
         }
 
         this.#repaint(potentialPosition);
+        this.#moveEyes(direction);
 
         if (this.#looseWinTest()) return;
 
@@ -210,6 +211,26 @@ export class Ghost{
         const newPosition = this.getCurrentTagField();
         newPosition.innerHTML = this.#ghostHtml();
         this.#sameDirection++;
+    }
+
+
+    #moveEyes(direction){
+        const ghost = document.querySelector('.'+this.#color);
+        const leftIris = ghost.querySelector('.leftEye>.iris');
+        const rightIris = ghost.querySelector('.rightEye>.iris');
+        if(direction == 'left'){
+            leftIris.style.left = 0;
+            rightIris.style.right = '1px';
+        } else if(direction == 'up'){
+            leftIris.style.top = 0;
+            rightIris.style.top = 0;
+        } else if(direction == 'down'){
+            leftIris.style.top = '2px';
+            rightIris.style.top = '2px';
+        } else if(direction == 'right'){
+            leftIris.style.left = '1px';
+            rightIris.style.right = 0;
+        }
     }
 
     getNewPostion(direction){

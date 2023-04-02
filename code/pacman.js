@@ -5,12 +5,14 @@ import { Point } from "./point.js";
 
 export class Pacman{
     #position; 
-    #boy = true;
-    #flow = false;
+    #boy = false;
+    #flow = true;
     #futureDirection = '';
     #moving = false;
     #speed = 150;
     #pacman;
+    #teleport = false;
+    #stopSign = false;
     #pacmanHtml = () => {
         return `<div class="pacman">
                     <div class="pacman-top">
@@ -43,15 +45,35 @@ export class Pacman{
     createPacman(tag){
         this.#moving = false;
         this.#futureDirection = '';
+        this.#stopSign = false;
         this.#position = new Point(tag.dataset.x, tag.dataset.y);
         if (!this.#pacman) this.#pacman = this.#createPacmanTag();
+        this.#pacman.classList.remove('hide');
+        this.#pacman.style.transitionDuration=this.#speed+'ms';
         this.#movePacman(this.#position);
         document.querySelector('.container').appendChild(this.#pacman);
     }
 
+    hide(){   
+        const blinkIntervalID = setInterval(() => {
+            this.#pacman.classList.toggle('hide');
+        }, 80);
+        setTimeout(()=> {
+            clearInterval(blinkIntervalID);
+            this.#pacman.classList.add('hide');
+        }, 600);
+    }
+
     #movePacman(position){
+        if (this.#teleport){
+            this.#pacman.classList.add('hide');
+        }
         this.#pacman.style.top = `${3+position.y*fieldSize+unit}`;
         this.#pacman.style.left = `${5+position.x*fieldSize+unit}`;
+        if (this.#teleport){
+            setTimeout(() => this.#pacman.classList.remove('hide'),30);
+            this.#teleport = false;
+        }
     }
 
     isFlow(){
@@ -99,16 +121,24 @@ export class Pacman{
         let i=1;
         const rotationIntervalID = setInterval(()=>{
             this.#pacman.style.transform=`rotate(${0.25*i++}turn)`;
-            if(i==12) clearInterval(rotationIntervalID);
+            if(i==13) {
+                clearInterval(rotationIntervalID);
+            }
         },100)
     }
 
-    stop(){
+    #stop(){
         this.#futureDirection = '';
         this.#moving = false;
     }
 
+    gameOver(){
+        this.#stop();
+        this.#stopSign = true;
+    }
+
     #move(direction){
+        if (this.#stopSign) return;
         this.#moving = true;
         if (this.#futureDirection &&
             this.#futureDirection!=direction && 
@@ -119,13 +149,14 @@ export class Pacman{
         const potentialPosition = this.getNewPostion(direction);
         const nextField = field.getField(potentialPosition);
         if (nextField<0) {
-            this.stop();
+            this.#stop();
             return;
         }
-        if (nextField == 1 || nextField == 2){
+        if (nextField == 1){
             setTimeout(()=>field.eatDot(potentialPosition),this.#speed/2);
         }
         if (nextField == 2){
+            setTimeout(()=>field.eatGreatDot(potentialPosition),this.#speed/2);
             ghosts.forEach(ghost => ghost.beKind())
         }
         this.#repaint(potentialPosition);
@@ -134,7 +165,7 @@ export class Pacman{
         if (this.#looseWinTest()) { 
             return;
         }
-        this.#flow ? setTimeout( () => this.#move(direction), this.#speed) : this.stop();
+        this.#flow ? setTimeout( () => this.#move(direction), this.#speed) : this.#stop();
     }
 
     #repaint(position){
@@ -176,7 +207,8 @@ export class Pacman{
     getNewPostion(direction){
         const position = new Point(this.#position.x, this.#position.y)
         if (this.getCurrentField() == 5 && ((this.#position.x == 0 && direction == 'left')||(this.#position.x > 0 && direction == 'right'))) {
-                position.move(field.teleport(position))
+            position.move(field.teleport(position));
+            this.#teleport = true;
         } else {
             position.moveDir(direction);
         }

@@ -7,18 +7,19 @@ export const win = () => {
     ghosts.forEach((ghost) => {
         ghost.blink();
     })
-    setTimeout(()=>ghosts.forEach((ghost) => ghost.erise()),500);
+    setTimeout(()=>ghosts.forEach((ghost) => ghost.erise()),1200);
     newGame('Congratulates!!!!');
 }
 
 export const loose = () => {
     stopCreatures();
-    pacman.rotate();
+    pacman.rotate(); 
+    setTimeout(() => pacman.hide(), 600);
     newGame('You lose :(');
 }
 
 const stopCreatures = () => {
-    pacman.stop();
+    pacman.gameOver();
     ghosts.forEach((ghost) => ghost = ghost.freeze());
 }
 
@@ -41,8 +42,8 @@ export const createRadioTheme = () => {
     colorDiv.appendChild(createOption('defaultColor','theme_color',true, resetColor));
     
     const secondDiv = document.createElement('div');
-    secondDiv.appendChild(createSwithcer("genderSwitcher","genderSwitcherText",'BOY', girlBoySwitch));
-    secondDiv.appendChild(createSwithcer("speedSwitcher","speedSwitcherText",'push', speedSwitch));
+    secondDiv.appendChild(createSwithcer("genderSwitcher","genderSwitcherText",'GIRL', girlBoySwitch));
+    secondDiv.appendChild(createSwithcer("speedSwitcher","speedSwitcherText",'flow', speedSwitch));
     secondDiv.appendChild(makePacmanBigBtn());
 
     flexCont.appendChild(colorDiv);
@@ -125,7 +126,8 @@ export function createPlayground(){
         '-3':'door',
         '-4':'ghost-place'
     }
-     const pg = [];
+    const pg = [];
+    field.clearIntervals();
     getText('./code/playground.txt')
     .then(text => {
         text.split('\n').forEach((str,i) => pg[i]=str.split('\t'));
@@ -142,6 +144,10 @@ export function createPlayground(){
             const span = document.createElement('div');
             span.classList.add('field');
             span.classList.add(FIELDS[f]);
+            if (FIELDS[f]=='great-dot'){
+                span.dataset.interval = setInterval(() => toggle(span),200)
+                field.intervals.push(span.dataset.interaval);
+            }
             span.dataset.x = x;
             span.dataset.y = y;
             span.style.width = fieldSize + unit;
@@ -160,15 +166,19 @@ export function createPlayground(){
     });
 }
 
+const toggle = (span) => {
+    span.classList.toggle('great-dot');
+}
+
 const createPacman = () =>{
     pacman.createPacman(document.querySelector('.pacman-place'));
 }
 
 const createGhosts = () =>{
-    const [...ghostPlaces] = document.querySelectorAll('.ghost-place')
+    const [...ghostPlaces] = document.querySelectorAll('.ghost-place');
     ghosts.forEach((ghost,i) => {
-        const place = ghostPlaces.length%(i+1);
-       ghost.create(ghostPlaces[place])
+        const place = (ghostPlaces.length-1)%(i+1);
+        ghost.create(ghostPlaces[place])
     }
     )
 }

@@ -44,6 +44,18 @@ export const createRadioTheme = () => {
     colorDiv.appendChild(createOption('black','theme_color'));
     colorDiv.appendChild(createOption('defaultColor','theme_color',true, resetColor));
     
+    const selectField = document.createElement('select');
+    selectField.addEventListener('change', () => {
+        console.log(selectField)
+        field.setFieldMap(selectField.value)
+    });
+    selectField.innerHTML = `
+        <option value='0'>Squear playground</option>
+        <option value='1'>colored Google playground</option>
+        <option value='2'>simple Google playground</option>
+        `
+    colorDiv.appendChild(selectField);
+    
     const secondDiv = document.createElement('div');
     secondDiv.appendChild(createSwithcer("genderSwitcher","genderSwitcherText",'GIRL', girlBoySwitch));
     secondDiv.appendChild(createSwithcer("speedSwitcher","speedSwitcherText",'flow', speedSwitch));
@@ -145,12 +157,13 @@ export function createPlayground(){
     }
     const pg = [];
     field.clearIntervals();
-    getText('./code/playground2.txt')
+    getText('./code/'+field.fieldMap)
     .then(text => {
         text.split('\n').forEach((str,i) => pg[i]=str.split('\t'));
         let container = document.querySelector('.container');
         if (container) {
             container.innerHTML = '';
+            container.style.width = fieldSize * pg[0].length + unit;
         } else {
             container = document.createElement('div');
             container.classList.add('container');

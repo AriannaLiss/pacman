@@ -171,7 +171,7 @@ export class Pacman{
         const newField= field.getField(this.getNewPostion(this.#futureDirection));
         if (this.#futureDirection &&
             this.#futureDirection!=direction && 
-            (newField>=0||newField<-10)){
+            (newField>=0||(this.#superPower&&newField<-10))){
             if (this.#flow) setTimeout( () => this.#move(this.#futureDirection), this.#speed);
             return;
         }

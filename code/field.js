@@ -1,4 +1,3 @@
-import { field } from "./index.js";
 import { Point } from "./point.js";
 
 export const fieldSize = 1;

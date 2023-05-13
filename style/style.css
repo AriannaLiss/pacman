@@ -23,6 +23,18 @@ body{
     border-radius: 3rem;
 }
 
+#makeSuperPower{
+
+    display: block;
+    background-color: green;
+    color:white;
+    font-weight: 900;
+    margin: 1rem;
+    height: 3rem;
+    width: 3rem;
+    border-radius: 3rem;
+}
+
 #genderSwitcherText{
     display: inline-block;
 }

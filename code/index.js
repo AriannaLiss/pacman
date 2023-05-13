@@ -7,7 +7,7 @@ import { Ghost } from "./ghost.js";
 export const field = new Field();
 export const pacman = new Pacman();
 export const ghosts = [];
-for (let i=0; i<3; i++){
+for (let i=0; i<4; i++){
     ghosts.push(new Ghost(i));
 }
 

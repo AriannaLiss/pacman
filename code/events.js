@@ -26,6 +26,10 @@ export const changePacmanSize = () => {
     }
 }
 
+export const superPacman = () => {
+    pacman.switchSuper();
+}
+
 export function checkKey(e) {
     e = e || window.event;
     if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {

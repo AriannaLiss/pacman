@@ -9,7 +9,7 @@ export class Ghost{
     #color
     #angry = true;
     #futureDirection = 'up';
-    #speed = 200;
+    #speed = 500;
     #inCage = true;
     #exitX = [35,36]
     #exitY = 4;
@@ -128,7 +128,7 @@ export class Ghost{
     }
 
     #appropriateField(field){
-        return !(field==-1 || field==-2 || (!this.#inCage && field ==-3));
+        return !(field==-1 || field==-2 || field<-10 || (!this.#inCage && field ==-3));
     }
 
     backHome(){

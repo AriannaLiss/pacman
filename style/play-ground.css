@@ -39,3 +39,19 @@
     background-size: 70% 70%;
     background-position: center;
 }
+
+.blue{
+    background-color: blue;
+}
+
+.yellow{
+    background-color: yellow;
+}
+
+.red{
+    background-color: red;
+}
+
+.green{
+    background-color: green;
+}

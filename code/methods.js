@@ -1,4 +1,4 @@
-import { changePacmanSize, checkKey, girlBoySwitch, resetColor, speedSwitch, switchTheme } from "./events.js";
+import { changePacmanSize, checkKey, girlBoySwitch, resetColor, speedSwitch, superPacman, switchTheme } from "./events.js";
 import { fieldSize, unit } from "./field.js";
 import { field, ghosts, pacman } from "./index.js";
 
@@ -13,8 +13,11 @@ export const win = () => {
 
 export const loose = () => {
     stopCreatures();
-    pacman.rotate(); 
-    setTimeout(() => pacman.hide(), 600);
+    const interval = pacman.rotate();
+    setTimeout(() => {
+        clearInterval(interval);
+        pacman.hide()
+    }, 1000);
     newGame('You lose :(');
 }
 
@@ -45,6 +48,7 @@ export const createRadioTheme = () => {
     secondDiv.appendChild(createSwithcer("genderSwitcher","genderSwitcherText",'GIRL', girlBoySwitch));
     secondDiv.appendChild(createSwithcer("speedSwitcher","speedSwitcherText",'flow', speedSwitch));
     secondDiv.appendChild(makePacmanBigBtn());
+    secondDiv.appendChild(makeSuperPowerBtn());
 
     flexCont.appendChild(colorDiv);
     flexCont.appendChild(secondDiv);
@@ -113,6 +117,15 @@ function makePacmanBigBtn(){
     return btn
 }
 
+function makeSuperPowerBtn(){
+    const btn = document.createElement('input');
+    btn.type = 'button';
+    btn.id = 'makeSuperPower';
+    btn.value = 'Super';
+    btn.addEventListener('click', superPacman);
+    return btn
+}
+
 export function createPlayground(){
     const FIELDS = {
         0:'empty',
@@ -124,11 +137,15 @@ export function createPlayground(){
         '-1':'border',
         '-2':'double-border',
         '-3':'door',
-        '-4':'ghost-place'
+        '-4':'ghost-place',
+        '-11':'blue',
+        '-12':'yellow',
+        '-13':'red',
+        '-14':'green',
     }
     const pg = [];
     field.clearIntervals();
-    getText('./code/playground.txt')
+    getText('./code/playground2.txt')
     .then(text => {
         text.split('\n').forEach((str,i) => pg[i]=str.split('\t'));
         let container = document.querySelector('.container');
@@ -144,6 +161,7 @@ export function createPlayground(){
             const span = document.createElement('div');
             span.classList.add('field');
             span.classList.add(FIELDS[f]);
+            if(f<-10){span.classList.add(FIELDS[-1])}
             if (FIELDS[f]=='great-dot'){
                 span.dataset.interval = setInterval(() => toggle(span),200)
                 field.intervals.push(span.dataset.interaval);

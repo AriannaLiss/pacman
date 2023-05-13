@@ -8,8 +8,9 @@ export class Pacman{
     #boy = false;
     #flow = true;
     #futureDirection = '';
+    #superPower = false;
     #moving = false;
-    #speed = 150;
+    #speed = 100;
     #pacman;
     #teleport = false;
     #stopSign = false;
@@ -46,6 +47,7 @@ export class Pacman{
         this.#moving = false;
         this.#futureDirection = '';
         this.#stopSign = false;
+        this.#superPower = false;
         this.#position = new Point(tag.dataset.x, tag.dataset.y);
         if (!this.#pacman) this.#pacman = this.#createPacmanTag();
         this.#pacman.classList.remove('hide');
@@ -90,6 +92,10 @@ export class Pacman{
         } 
     }
 
+    switchSuper(){
+        this.#superPower = !this.#superPower;
+    }
+
     isBoy(){
         return this.#boy;
     }
@@ -118,6 +124,9 @@ export class Pacman{
     }
 
     rotate(){
+        // if (this.#boy) {
+        //     return this.break();
+        // }
         let i=1;
         const rotationIntervalID = setInterval(()=>{
             this.#pacman.style.transform=`rotate(${0.25*i++}turn)`;
@@ -125,6 +134,25 @@ export class Pacman{
                 clearInterval(rotationIntervalID);
             }
         },100)
+        return rotationIntervalID;
+    }
+    
+    break(){
+        let i=0;
+        console.log(this.#pacman)
+        const top = this.#pacman.querySelector(".pacman-top");
+        const bottom = this.#pacman.querySelector(".pacman-bottom");
+        this.#pacman.style.transform=`rotate(0.75turn)`;
+        
+        const rotationIntervalID = setInterval(()=>{
+            bottom.style.transform=`rotate(${0.05*i++}turn)`;
+            top.style.transform=`rotate(${0.05*(-i)}turn)`;
+            
+            if(i==10) {
+                clearInterval(rotationIntervalID);
+            }
+        },100)
+        return rotationIntervalID
     }
 
     #stop(){
@@ -140,15 +168,16 @@ export class Pacman{
     #move(direction){
         if (this.#stopSign) return;
         this.#moving = true;
+        const newField= field.getField(this.getNewPostion(this.#futureDirection));
         if (this.#futureDirection &&
             this.#futureDirection!=direction && 
-            field.getField(this.getNewPostion(this.#futureDirection))>=0){
+            (newField>=0||newField<-10)){
             if (this.#flow) setTimeout( () => this.#move(this.#futureDirection), this.#speed);
             return;
         }
         const potentialPosition = this.getNewPostion(direction);
         const nextField = field.getField(potentialPosition);
-        if (nextField<0) {
+        if ((this.#superPower&&nextField<0&&nextField>-10) || (!this.#superPower&&nextField<0)) {
             this.#stop();
             return;
         }

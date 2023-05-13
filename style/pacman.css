@@ -22,9 +22,9 @@ body{
 }
 
 .huge-pacman{
-  width:200px!important;
-  height:200px!important;
-  position: absolute;
+  width: 2rem!important;
+  height: 2rem!important;
+  margin: -0.5rem 0 0 -.5rem;
   left: 40%;
   top: 23%;
 }

@@ -1,4 +1,3 @@
-import { field, ghosts } from "./index.js";
 import { createPlayground } from "./methods.js";
 import { Point } from "./point.js";
 
@@ -7,9 +6,10 @@ export const unit = 'rem';
 
 export class Field{
     #FIELD_MAPS = [
-        'playground2.txt',
-        'playground_colored.txt',
-        'playground.txt',
+        'pink',
+        'square',
+        'google',
+        'google_colored',
     ]
 
     #pg = [];
@@ -17,6 +17,10 @@ export class Field{
     #portals = [];
     #intervals = [];
     #fieldMap = 0;
+
+    get fieldMaps() {
+        return this.#FIELD_MAPS;
+    }
 
     setFieldMap = (index) => {
         if (index>=0 && index<this.#FIELD_MAPS.length) {

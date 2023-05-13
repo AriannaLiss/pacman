@@ -46,14 +46,11 @@ export const createRadioTheme = () => {
     
     const selectField = document.createElement('select');
     selectField.addEventListener('change', () => {
-        console.log(selectField)
         field.setFieldMap(selectField.value)
     });
-    selectField.innerHTML = `
-        <option value='0'>Squear playground</option>
-        <option value='1'>colored Google playground</option>
-        <option value='2'>simple Google playground</option>
-        `
+    field.fieldMaps.forEach((fieldName,i) => {
+        selectField.innerHTML += `<option value='${i}'>${fieldName}</option>`
+    })
     colorDiv.appendChild(selectField);
     
     const secondDiv = document.createElement('div');
@@ -69,10 +66,6 @@ export const createRadioTheme = () => {
 }
 
 const createSwithcer = (inputId, labelId, text, switchHandler) => {
-//     <label class="switch">
-//   <input type="checkbox">
-//   <span class="slider round"></span>
-// </label>
     const switcher = document.createElement('div');
     switcher.classList.add('switch-container');
     const label = document.createElement('label');
@@ -154,10 +147,11 @@ export function createPlayground(){
         '-12':'yellow',
         '-13':'red',
         '-14':'green',
+        '-15':'pink',
     }
     const pg = [];
     field.clearIntervals();
-    getText('./code/'+field.fieldMap)
+    getText('../playgrounds/'+field.fieldMap+'.pg')
     .then(text => {
         text.split('\n').forEach((str,i) => pg[i]=str.split('\t'));
         let container = document.querySelector('.container');

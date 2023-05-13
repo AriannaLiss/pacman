@@ -18,10 +18,8 @@ export const changePacmanSize = () => {
     const pacTag = document.querySelector('.pacman');
     pacTag.classList.toggle('huge-pacman');
     if(pacTag.classList.contains('huge-pacman')) {
-        document.querySelector('.pacman-bow').style.top = '-15%'
-        document.querySelectorAll('.pacman-bow>span').forEach((span)=>{span.style.transform = 'scale(20)'});
+        document.querySelectorAll('.pacman-bow>span').forEach((span)=>{span.style.transform = 'scale(2)'});
     } else {
-        document.querySelector('.pacman-bow').style.top = '-40%'
         document.querySelectorAll('.pacman-bow>span').forEach((span)=>{span.style.transform = 'scale(1)'});
     }
 }

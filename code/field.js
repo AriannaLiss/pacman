@@ -14,7 +14,6 @@ export class Field{
 
     #pg = [];
     #dots;
-    #portals = [];
     #intervals = [];
     #fieldMap = 0;
 
@@ -42,7 +41,7 @@ export class Field{
     } 
 
     teleport(position){
-        return this.#portals.find((point) => point.x!=position.x);
+        return new Point(position.x>0?0:this.#pg[0].length-1,position.y);   
     }
 
     getTagField(position){
@@ -58,9 +57,6 @@ export class Field{
         this.#dots = 0;
         pg.forEach((row,y) => row.forEach((field,x) => {
             if(field == 1 || field == 2) this.#dots++;
-            else if (field == 5) {
-                this.#portals.push(new Point(x,y));
-            }
         }));
     }
 

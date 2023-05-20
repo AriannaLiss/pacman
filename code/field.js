@@ -16,6 +16,11 @@ export class Field{
     #dots;
     #intervals = [];
     #fieldMap = 0;
+    #exitX = []
+    #exitY = [];
+
+    get exitX(){ return this.#exitX}
+    get exitY(){ return this.#exitY}
 
     get fieldMaps() {
         return this.#FIELD_MAPS;
@@ -23,9 +28,15 @@ export class Field{
 
     setFieldMap = (index) => {
         if (index>=0 && index<this.#FIELD_MAPS.length) {
-            this.#fieldMap = index
+            this.#fieldMap = index;
         }
-        createPlayground();
+    }
+
+    #ghostDoorInit(x,y){
+        if(!this.#exitX.includes(x)) this.#exitX.push(x);
+        if(!this.#exitY.includes(y)) this.#exitY.push(y);
+        console.log(this.#exitX)
+        console.log(this.#exitY)
     }
 
     get fieldMap(){
@@ -55,8 +66,11 @@ export class Field{
     init(pg){
         this.#pg = pg;
         this.#dots = 0;
+        this.#exitX=[];
+        this.#exitY=[];
         pg.forEach((row,y) => row.forEach((field,x) => {
             if(field == 1 || field == 2) this.#dots++;
+            if(field==-3){this.#ghostDoorInit(x,y)}
         }));
     }
 

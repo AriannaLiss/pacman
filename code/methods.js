@@ -1,4 +1,4 @@
-import { changePacmanSize, checkKey, girlBoySwitch, resetColor, speedSwitch, superPacman, switchTheme } from "./events.js";
+import { changePacmanSize, checkKey, girlBoySwitch, resetColor, speedSwitch, superPacman, switchPlayground, switchTheme } from "./events.js";
 import { fieldSize, unit } from "./field.js";
 import { field, ghosts, pacman } from "./index.js";
 
@@ -21,16 +21,9 @@ export const loose = () => {
     newGame('You lose :(');
 }
 
-const stopCreatures = () => {
+export const stopCreatures = () => {
     pacman.gameOver();
     ghosts.forEach((ghost) => ghost = ghost.freeze());
-}
-
-export const newGame = (msg) => {
-    setTimeout(()=>{
-        alert(msg);
-        createPlayground();
-    },1500);
 }
 
 export const createRadioTheme = () => {
@@ -45,9 +38,7 @@ export const createRadioTheme = () => {
     colorDiv.appendChild(createOption('defaultColor','theme_color',true, resetColor));
     
     const selectField = document.createElement('select');
-    selectField.addEventListener('change', () => {
-        field.setFieldMap(selectField.value)
-    });
+    selectField.addEventListener('change', () => switchPlayground(selectField.value));
     field.fieldMaps.forEach((fieldName,i) => {
         selectField.innerHTML += `<option value='${i}'>${fieldName}</option>`
     })

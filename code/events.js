@@ -1,4 +1,5 @@
-import { pacman } from "./index.js";
+import { field, pacman } from "./index.js";
+import { createPlayground, stopCreatures } from "./methods.js";
 
 const DEF_BG = 'rgba(239, 141, 227, 0.935)';
 
@@ -45,4 +46,17 @@ export const girlBoySwitch = () => {
 export const speedSwitch = () => {
     pacman.switchFlow();
     document.querySelector('#speedSwitcherText').innerText = pacman.isFlow() ? 'flow' : 'push'
+}
+
+export const newGame = (msg) => {
+    setTimeout(()=>{
+        alert(msg);
+        createPlayground();
+    },1500);
+}
+
+export const switchPlayground = (pg) => {
+    stopCreatures();
+    field.setFieldMap(pg);
+    setTimeout(createPlayground,1000);
 }

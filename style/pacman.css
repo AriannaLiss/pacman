@@ -75,7 +75,7 @@ transition: top 150ms, left 150ms;
 }
 
 .pacman-top{
-  background-color:yellow;
+  background-color:red;
   height:50%;
   width:100%;
   border-radius:100px 100px 0 0;
@@ -83,7 +83,7 @@ transition: top 150ms, left 150ms;
 }
 
 .pacman-bottom{
-background-color:yellow;
+background-color:red;
   height:50%;
   width:100%;
   border-radius:0 0 100px 100px;

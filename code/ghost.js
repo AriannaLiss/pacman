@@ -11,8 +11,6 @@ export class Ghost{
     #futureDirection = 'up';
     #speed = 500;
     #inCage = true;
-    #exitX = [35,36]
-    #exitY = 4;
     #exitDirection = 'up';
     #sameDirection = 0;
     #startPos;
@@ -151,7 +149,7 @@ export class Ghost{
         const nextField = field.getField(potentialPosition);
 
         if (!this.#appropriateField(nextField)) {
-            if(this.#inCage && (this.#position.y<=this.#exitY)){
+            if(this.#inCage && (this.#position.y<=field.exitY[0])){
                 this.#futureDirection = this.#randomMove(direction);
                 this.#inCage = false;
             }
@@ -190,7 +188,7 @@ export class Ghost{
                 return true;
         }
 
-        if(this.#inCage && direction != this.#exitDirection && this.#exitX.includes(this.#position.x)){
+        if(this.#inCage && direction != this.#exitDirection && field.exitX.includes(this.#position.x)){
             setTimeout( () => this.#move(this.#exitDirection), this.#speed);
             return true;
         }

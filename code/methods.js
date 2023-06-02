@@ -1,4 +1,4 @@
-import { changePacmanSize, checkKey, girlBoySwitch, resetColor, speedSwitch, superPacman, switchPlayground, switchTheme } from "./events.js";
+import { changePacmanSize, checkKey, girlBoySwitch, newGame, resetColor, speedSwitch, superPacman, switchPlayground, switchTheme } from "./events.js";
 import { fieldSize, unit } from "./field.js";
 import { field, ghosts, pacman } from "./index.js";
 
@@ -142,7 +142,7 @@ export function createPlayground(){
     }
     const pg = [];
     field.clearIntervals();
-    getText('../playgrounds/'+field.fieldMap+'.pg')
+    getText('playgrounds/'+field.fieldMap+'.pg')
     .then(text => {
         text.split('\n').forEach((str,i) => pg[i]=str.split('\t'));
         let container = document.querySelector('.container');

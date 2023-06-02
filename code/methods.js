@@ -123,7 +123,7 @@ function makeSuperPowerBtn(){
 }
 
 export function addFamilyPhoto(){
-    document.querySelector('body').insertAdjacentHTML('beforeend','<div class="picture"><img src="../img/family.jpeg" alt="pacman family"/></div>')
+    document.querySelector('body').insertAdjacentHTML('beforeend','<div class="picture"><img src="img/family.jpeg" alt="pacman family"/></div>')
 }
 
 export function createPlayground(){

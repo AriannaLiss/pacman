@@ -34,8 +34,8 @@ export const createRadioTheme = () => {
     const colorDiv = document.createElement('div');
     colorDiv.appendChild(createOption('red','theme_color'));
     colorDiv.appendChild(createOption('magenta','theme_color'));
-    colorDiv.appendChild(createOption('black','theme_color'));
-    colorDiv.appendChild(createOption('defaultColor','theme_color',true, resetColor));
+    colorDiv.appendChild(createOption('black','theme_color', true));
+    colorDiv.appendChild(createOption('pink','theme_color',false, resetColor));
     
     const selectField = document.createElement('select');
     selectField.addEventListener('change', () => switchPlayground(selectField.value));
@@ -122,6 +122,10 @@ function makeSuperPowerBtn(){
     return btn
 }
 
+export function addFamilyPhoto(){
+    document.querySelector('body').insertAdjacentHTML('beforeend','<div class="picture"><img src="../img/family.jpeg" alt="pacman family"/></div>')
+}
+
 export function createPlayground(){
     const FIELDS = {
         0:'empty',
@@ -174,7 +178,7 @@ export function createPlayground(){
         field.init(pg);
 
         document.addEventListener('keydown', checkKey);
-
+        
         document.querySelector('body').appendChild(container);
 
         createPacman();

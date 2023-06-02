@@ -35,8 +35,6 @@ export class Field{
     #ghostDoorInit(x,y){
         if(!this.#exitX.includes(x)) this.#exitX.push(x);
         if(!this.#exitY.includes(y)) this.#exitY.push(y);
-        console.log(this.#exitX)
-        console.log(this.#exitY)
     }
 
     get fieldMap(){

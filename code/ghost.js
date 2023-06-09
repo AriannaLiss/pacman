@@ -18,7 +18,6 @@ export class Ghost{
     #blinkIntervalID;
     #blinkTimeoutID;
     #kindTimeoutID;
-    #kindnessTime=10000;
 
     constructor(color){
         this.#color = colorList[color];
@@ -41,7 +40,7 @@ export class Ghost{
     beKind(){
         this.#cleanIntervals();
         this.#angry = false;
-        this.#kindTimeoutID = setTimeout(() => this.blink(), this.#kindnessTime);
+        this.#kindTimeoutID = setTimeout(() => this.blink(), field.kindnessTime);
     }
 
     #cleanIntervals(){
@@ -53,11 +52,11 @@ export class Ghost{
     blink(){
         this.#blinkIntervalID = setInterval(() => {
             document.getElementsByClassName(this.#color)[0]?.classList.toggle('kind-ghost');
-        }, this.#kindnessTime/40);
+        }, field.kindnessTime/40);
         this.#blinkTimeoutID = setTimeout(()=> {
             clearInterval(this.#blinkIntervalID);
             this.#angry = true;
-        }, this.#kindnessTime/4);
+        }, field.kindnessTime/4);
     }
 
     get angry(){
@@ -137,7 +136,7 @@ export class Ghost{
             setTimeout(() => {
                 this.init();
                 this.startMove()
-            }, this.#kindnessTime);  
+            }, field.kindnessTime);  
         }, 100)
     }
 

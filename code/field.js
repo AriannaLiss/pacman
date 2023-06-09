@@ -18,6 +18,7 @@ export class Field{
     #fieldMap = 0;
     #exitX = []
     #exitY = [];
+    get kindnessTime(){return 10000};
 
     get exitX(){ return this.#exitX}
     get exitY(){ return this.#exitY}

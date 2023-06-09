@@ -14,26 +14,23 @@ export class Pacman{
     #pacman;
     #teleport = false;
     #stopSign = false;
-    #pacmanHtml = () => {
-        return `<div class="pacman">
-                    <div class="pacman-top">
-                        <div class="pacman-bow ${this.#boy ? 'hide' : ''}"><span></span><span></span></div>
-                    </div>
-                    <div class="pacman-bottom"></div>
-                </div>`
-    }
+    #angryTimer;
+
     #createPacmanTag(){
         const pacman = document.createElement('div');
         const pacmanTop = document.createElement('div');
         const pacmanBow = document.createElement('div');
         const pacmanBottom = document.createElement('div');
+        const teeth = '<span class="tooth"></span><span class="tooth"></span><span class="tooth"></span><span class="tooth"></span>';
         pacman.classList.add('pacman');
         pacmanTop.classList.add('pacman-top');
         pacmanBow.classList.add('pacman-bow');
         pacmanBow.innerHTML = '<span></span><span></span>';
         if(this.#boy)pacmanBow.classList.add('hide');
         pacmanBottom.classList.add('pacman-bottom');
+        pacmanBottom.innerHTML = '<div class="jowl hide bottom-jowl">' + teeth + '</div>';
         pacmanTop.appendChild(pacmanBow);
+        pacmanTop.innerHTML += '<span class="pacman-eye hide"></span><div class="jowl hide  hide top-jowl">' + teeth + '</div>';
         pacman.appendChild(pacmanTop);
         pacman.appendChild(pacmanBottom);
         pacman.position='absolute';
@@ -155,6 +152,22 @@ export class Pacman{
         return rotationIntervalID
     }
 
+    #beAngry(){
+        if(!this.#boy) return;
+        document.querySelectorAll('.jowl').forEach(jowl => jowl.classList.remove('hide'));
+        document.querySelectorAll('.pacman-eye').forEach(jowl => jowl.classList.remove('hide'));
+        if (this.#angryTimer) clearTimeout(this.#angryTimer);
+        this.#angryTimer = setTimeout(() => this.#beKind(),field.kindnessTime * 1.25);
+    }
+    
+    #beKind(){
+        if(!this.#boy) return;
+        if (this.#angryTimer) clearTimeout(this.#angryTimer);
+        this.#angryTimer = undefined;
+        document.querySelectorAll('.jowl').forEach(jowl => jowl.classList.add('hide'));
+        document.querySelectorAll('.pacman-eye').forEach(jowl => jowl.classList.add('hide'));
+    }
+
     #stop(){
         this.#futureDirection = '';
         this.#moving = false;
@@ -187,6 +200,7 @@ export class Pacman{
         if (nextField == 2){
             setTimeout(()=>field.eatGreatDot(potentialPosition),this.#speed/2);
             ghosts.forEach(ghost => ghost.beKind())
+            this.#beAngry();
         }
         this.#repaint(potentialPosition);
         this.#rotateHead(direction);

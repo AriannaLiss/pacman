@@ -15,9 +15,9 @@ export const resetColor = (e) => {
     }
 }
 
-export const changePacmanSize = () => {
+export const changePacmanSize = (makeBig = true) => {
     const pacTag = document.querySelector('.pacman');
-    pacTag.classList.toggle('huge-pacman');
+    makeBig ? pacTag.classList.add('huge-pacman') : pacTag.classList.remove('huge-pacman') ;
     if(pacTag.classList.contains('huge-pacman')) {
         document.querySelectorAll('.pacman-bow>span').forEach((span)=>{span.style.transform = 'scale(2)'});
     } else {
@@ -25,8 +25,9 @@ export const changePacmanSize = () => {
     }
 }
 
-export const superPacman = () => {
+export const superPacman = (btn) => {
     pacman.switchSuper();
+    btn.classList.toggle('disabled-btn')
 }
 
 export function checkKey(e) {

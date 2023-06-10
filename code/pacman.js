@@ -1,3 +1,4 @@
+import { changePacmanSize } from "./events.js";
 import { fieldSize, unit } from "./field.js";
 import { field, ghosts } from "./index.js";
 import { loose, win } from "./methods.js";
@@ -8,7 +9,7 @@ export class Pacman{
     #boy = false;
     #flow = true;
     #futureDirection = '';
-    #superPower = false;
+    #superPower;
     #moving = false;
     #speed = 100;
     #pacman;
@@ -21,7 +22,8 @@ export class Pacman{
         const pacmanTop = document.createElement('div');
         const pacmanBow = document.createElement('div');
         const pacmanBottom = document.createElement('div');
-        const teeth = '<span class="tooth"></span><span class="tooth"></span><span class="tooth"></span><span class="tooth"></span>';
+        let teeth = '';
+        for (let i=0;i<4;i++) teeth += '<span class="tooth"></span>';
         pacman.classList.add('pacman');
         pacmanTop.classList.add('pacman-top');
         pacmanBow.classList.add('pacman-bow');
@@ -44,7 +46,6 @@ export class Pacman{
         this.#moving = false;
         this.#futureDirection = '';
         this.#stopSign = false;
-        this.#superPower = false;
         this.#position = new Point(tag.dataset.x, tag.dataset.y);
         if (!this.#pacman) this.#pacman = this.#createPacmanTag();
         this.#pacman.classList.remove('hide');
@@ -127,7 +128,7 @@ export class Pacman{
         let i=1;
         const rotationIntervalID = setInterval(()=>{
             this.#pacman.style.transform=`rotate(${0.25*i++}turn)`;
-            if(i==13) {
+            if(i===9) {
                 clearInterval(rotationIntervalID);
             }
         },100)
@@ -153,6 +154,7 @@ export class Pacman{
     }
 
     #beAngry(){
+        changePacmanSize();
         if(!this.#boy) return;
         document.querySelectorAll('.jowl').forEach(jowl => jowl.classList.remove('hide'));
         document.querySelectorAll('.pacman-eye').forEach(jowl => jowl.classList.remove('hide'));
@@ -160,8 +162,8 @@ export class Pacman{
         this.#angryTimer = setTimeout(() => this.#beKind(),field.kindnessTime * 1.25);
     }
     
-    #beKind(){
-        if(!this.#boy) return;
+    #beKind(){  
+        changePacmanSize(false);
         if (this.#angryTimer) clearTimeout(this.#angryTimer);
         this.#angryTimer = undefined;
         document.querySelectorAll('.jowl').forEach(jowl => jowl.classList.add('hide'));
@@ -176,6 +178,7 @@ export class Pacman{
     gameOver(){
         this.#stop();
         this.#stopSign = true;
+        this.#beKind();
     }
 
     #move(direction){

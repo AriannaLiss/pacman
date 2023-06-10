@@ -39,13 +39,16 @@ background-color: red;
     background-color: green;
 }
 
+.disabled-btn{
+    opacity: .5!important;
+}
+
 #genderSwitcherText{
     display: inline-block;
 }
 
 .container{
     background-color: black;
-    /* //rgba(239, 141, 227, 0.935); */
     margin:1rem auto;
     padding:3rem 5rem; 
     line-height: 0rem;

@@ -1,4 +1,4 @@
-import { changePacmanSize, checkKey, girlBoySwitch, newGame, resetColor, speedSwitch, superPacman, switchPlayground, switchTheme } from "./events.js";
+import { checkKey, girlBoySwitch, newGame, resetColor, speedSwitch, superPacman, switchPlayground, switchTheme } from "./events.js";
 import { fieldSize, unit } from "./field.js";
 import { field, ghosts, pacman } from "./index.js";
 
@@ -47,7 +47,6 @@ export const createRadioTheme = () => {
     const secondDiv = document.createElement('div');
     secondDiv.appendChild(createSwithcer("genderSwitcher","genderSwitcherText",'GIRL', girlBoySwitch));
     secondDiv.appendChild(createSwithcer("speedSwitcher","speedSwitcherText",'flow', speedSwitch));
-    secondDiv.appendChild(makePacmanBigBtn());
     secondDiv.appendChild(makeSuperPowerBtn());
 
     flexCont.appendChild(colorDiv);
@@ -104,21 +103,13 @@ const createOption = (id, radioGroup, checked = false,event = switchTheme) => {
     return div;
 }
 
-function makePacmanBigBtn(){
-    const btn = document.createElement('input');
-    btn.type = 'button';
-    btn.id = 'makeHuge';
-    btn.value = 'HUGE';
-    btn.addEventListener('click', changePacmanSize);
-    return btn
-}
-
 function makeSuperPowerBtn(){
     const btn = document.createElement('input');
     btn.type = 'button';
     btn.id = 'makeSuperPower';
     btn.value = 'Super';
-    btn.addEventListener('click', superPacman);
+    btn.classList.add('disabled-btn');
+    btn.addEventListener('click', (e) => superPacman(e.target));
     return btn
 }
 

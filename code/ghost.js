@@ -23,6 +23,16 @@ export class Ghost{
         this.#color = colorList[color];
     }
 
+    #cleanIntervals(){
+        if (this.#blinkIntervalID) clearInterval(this.#blinkIntervalID);
+        if (this.#blinkTimeoutID) clearTimeout(this.#blinkTimeoutID);
+        if (this.#kindTimeoutID) clearTimeout(this.#kindTimeoutID);
+    }
+
+    cleanIntervals(){
+        this.#cleanIntervals();
+    }
+
     init(){
         this.#inCage = true;
         this.#angry = true;
@@ -41,12 +51,6 @@ export class Ghost{
         this.#cleanIntervals();
         this.#angry = false;
         this.#kindTimeoutID = setTimeout(() => this.blink(), field.kindnessTime);
-    }
-
-    #cleanIntervals(){
-        if (this.#blinkIntervalID) clearInterval(this.#blinkIntervalID);
-        if (this.#blinkTimeoutID) clearTimeout(this.#blinkTimeoutID);
-        if (this.#kindTimeoutID) clearTimeout(this.#kindTimeoutID);
     }
 
     blink(){

@@ -5,6 +5,7 @@ import { field, ghosts, pacman } from "./index.js";
 export const win = () => {
     stopCreatures();
     ghosts.forEach((ghost) => {
+        ghost.cleanIntervals();
         ghost.blink();
     })
     setTimeout(()=>ghosts.forEach((ghost) => ghost.erise()),1200);

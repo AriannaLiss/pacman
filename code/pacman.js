@@ -167,10 +167,8 @@ export class Pacman{
         changePacmanSize(false);
         if (this.#angryTimer) clearTimeout(this.#angryTimer);
         this.#angryTimer = undefined;
-        if(this.#boy){
-            document.querySelectorAll('.jowl').forEach(jowl => jowl.classList.add('hide'));
-            document.querySelectorAll('.pacman-eye').forEach(jowl => jowl.classList.add('hide'));
-        }
+        document.querySelectorAll('.jowl').forEach(jowl => jowl.classList.add('hide'));
+        document.querySelectorAll('.pacman-eye').forEach(jowl => jowl.classList.add('hide'));
     }
 
     #stop(){

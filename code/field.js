@@ -1,4 +1,3 @@
-import { createPlayground } from "./methods.js";
 import { Point } from "./point.js";
 
 export const fieldSize = 1;

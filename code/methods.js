@@ -37,22 +37,24 @@ export const createRadioTheme = () => {
     colorDiv.appendChild(createOption('black','theme_color', true));
     colorDiv.appendChild(createOption('pink','theme_color',false, resetColor));
     
+    const switchersDiv = document.createElement('div');
+    switchersDiv.appendChild(createSwithcer("genderSwitcher","genderSwitcherText",'GIRL', girlBoySwitch));
+    switchersDiv.appendChild(createSwithcer("speedSwitcher","speedSwitcherText",'flow', speedSwitch));
+
     const selectField = document.createElement('select');
+    selectField.classList.add('pg-select');
     selectField.addEventListener('change', () => switchPlayground(selectField.value));
     field.fieldMaps.forEach((fieldName,i) => {
         selectField.innerHTML += `<option value='${i}'>${fieldName}</option>`
     })
-    colorDiv.appendChild(selectField);
+    switchersDiv.appendChild(selectField);
     
-    const secondDiv = document.createElement('div');
-    secondDiv.appendChild(createSwithcer("genderSwitcher","genderSwitcherText",'GIRL', girlBoySwitch));
-    secondDiv.appendChild(createSwithcer("speedSwitcher","speedSwitcherText",'flow', speedSwitch));
-    secondDiv.appendChild(makeSuperPowerBtn());
-
     flexCont.appendChild(colorDiv);
-    flexCont.appendChild(secondDiv);
+    flexCont.appendChild(makeSuperPowerBtn());
+    flexCont.appendChild(switchersDiv);
+
     form.appendChild(flexCont);
-    document.querySelector('body').appendChild(form);
+    document.querySelector('.header').appendChild(form);
 }
 
 const createSwithcer = (inputId, labelId, text, switchHandler) => {
@@ -113,10 +115,6 @@ function makeSuperPowerBtn(){
     return btn
 }
 
-export function addFamilyPhoto(){
-    document.querySelector('body').insertAdjacentHTML('beforeend','<div class="picture"><img src="img/family.jpeg" alt="pacman family"/></div>')
-}
-
 export function createPlayground(){
     const FIELDS = {
         0:'empty',
@@ -141,14 +139,8 @@ export function createPlayground(){
     .then(text => {
         text.split('\n').forEach((str,i) => pg[i]=str.split('\t'));
         let container = document.querySelector('.container');
-        if (container) {
-            container.innerHTML = '';
-            container.style.width = fieldSize * pg[0].length + unit;
-        } else {
-            container = document.createElement('div');
-            container.classList.add('container');
-            container.style.width = fieldSize * pg[0].length + unit;
-        }
+        container.innerHTML = '';
+        container.style.width = fieldSize * pg[0].length + unit;
         pg.forEach((row,y) =>
             row.forEach((f,x) => {
             const span = document.createElement('div');
@@ -170,8 +162,6 @@ export function createPlayground(){
 
         document.addEventListener('keydown', checkKey);
         
-        document.querySelector('body').appendChild(container);
-
         createPacman();
         createGhosts();
     });

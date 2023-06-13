@@ -18,16 +18,24 @@ body{
 }
 
 .switch-container{
-    margin: 1rem;
+    margin: .5rem;
+}
+
+.pg-select{    
+    padding: 0.5rem;
+    border-radius: 1rem;
+    margin: 0 1.5rem;
+    min-width: 10rem;
 }
 
 #makeHuge, #makeSuperPower{    
     display: inline-block;
     color:white;
     font-weight: 900;
+    font-size:1.5rem;
     margin: 1rem;
-    height: 5rem;
-    width: 5rem;
+    height: 6rem;
+    width: 6rem;
     border-radius: 3rem;
 }
 
@@ -63,18 +71,19 @@ label{
     margin-left: 1rem;
 }
 
-.red{
-    color:red;
+label.black,label.red,label.pink{
+    background-color:black!important;
 }
 
+.pink{
+    color: rgba(239, 141, 227, 0.935);
+}
 .black{
     color:white;
 }
-
-.defaultColor{
-    color: rgba(239, 141, 227, 0.935);
+.red{
+    color:red;
 }
-
 .magenta{
     color:magenta;
 }

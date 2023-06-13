@@ -1,6 +1,6 @@
 import { Field } from "./field.js";
 import { Pacman } from "./pacman.js";
-import { addFamilyPhoto, createPlayground, createRadioTheme } from "./methods.js";
+import { createPlayground, createRadioTheme } from "./methods.js";
 import { Ghost } from "./ghost.js";
 
 
@@ -14,5 +14,4 @@ for (let i=0; i<4; i++){
 window.addEventListener('DOMContentLoaded',(e) => {
     createPlayground();
     createRadioTheme();
-    addFamilyPhoto();
 })

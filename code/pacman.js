@@ -155,9 +155,10 @@ export class Pacman{
 
     #beAngry(){
         changePacmanSize();
-        if(!this.#boy) return;
-        document.querySelectorAll('.jowl').forEach(jowl => jowl.classList.remove('hide'));
-        document.querySelectorAll('.pacman-eye').forEach(jowl => jowl.classList.remove('hide'));
+        if(this.#boy){
+            document.querySelectorAll('.jowl').forEach(jowl => jowl.classList.remove('hide'));
+            document.querySelectorAll('.pacman-eye').forEach(jowl => jowl.classList.remove('hide'));
+        }
         if (this.#angryTimer) clearTimeout(this.#angryTimer);
         this.#angryTimer = setTimeout(() => this.#beKind(),field.kindnessTime * 1.25);
     }
@@ -166,8 +167,10 @@ export class Pacman{
         changePacmanSize(false);
         if (this.#angryTimer) clearTimeout(this.#angryTimer);
         this.#angryTimer = undefined;
-        document.querySelectorAll('.jowl').forEach(jowl => jowl.classList.add('hide'));
-        document.querySelectorAll('.pacman-eye').forEach(jowl => jowl.classList.add('hide'));
+        if(this.#boy){
+            document.querySelectorAll('.jowl').forEach(jowl => jowl.classList.add('hide'));
+            document.querySelectorAll('.pacman-eye').forEach(jowl => jowl.classList.add('hide'));
+        }
     }
 
     #stop(){
